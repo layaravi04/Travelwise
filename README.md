@@ -1,2 +1,2 @@
-# Travelwise
-TravelWise - Day Trip Planner for Bangalore
+# travelwise
+travelWise - Day Trip Planner for Bangalore
