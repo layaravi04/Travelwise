@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>TravelWise - Smart Day Trip Planner for Bangalore</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Landing Screen -->
+        <div id="landingScreen" class="landing-screen active">
+            <div class="landing-content">
+                <h1 class="landing-title">🌍 TravelWise</h1>
+                <p class="landing-tagline">Plan safe, thoughtful trips tailored to your mood, time, and comfort</p>
+                
+                <div class="planning-question">
+                    <h2>How do you want to plan your trips?</h2>
+                </div>
+                
+                <div class="planning-cards">
+                    <div class="planning-card" onclick="selectPlanningMode('mood')">
+                        <div class="card-icon">💝</div>
+                        <h3>According to Mood</h3>
+                        <p>Plan your trip based on how you're feeling today - romantic, alone time, happy, or need some peace</p>
+                    </div>
+                    <div class="planning-card" onclick="selectPlanningMode('destination')">
+                        <div class="card-icon">📍</div>
+                        <h3>According to Destination</h3>
+                        <p>Choose where you want to go and we'll tailor the experience to your preferences</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <header id="mainHeader" class="hidden">
+            <div class="header-content">
+                <h1 class="logo">🌍 TravelWise</h1>
+                <p class="tagline">Plan Your Perfect Day Trip in Bangalore</p>
+                <div class="progress-bar">
+                    <div class="progress-step active" id="step1">1</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step" id="step2">2</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step" id="step3">3</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step" id="step4">4</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step" id="step5">5</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step" id="step6">6</div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="form-container hidden" id="formContainer">
+                <form id="travelForm">
+                    <!-- Step 1: Current Location -->
+                    <div class="form-step active" id="formStep1">
+                        <div class="step-header">
+                            <span class="step-number">01</span>
+                            <h2>Where are you located?</h2>
+                            <p>Select your current location in Bangalore</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="currentLocation">📍 Your Location</label>
+                            <select id="currentLocation" required>
+                                <option value="">Choose your location</option>
+                                <option value="koramangala">Koramangala</option>
+                                <option value="indiranagar">Indiranagar</option>
+                                <option value="whitefield">Whitefield</option>
+                                <option value="marathahalli">Marathahalli</option>
+                                <option value="hebbal">Hebbal</option>
+                                <option value="jayanagar">Jayanagar</option>
+                                <option value="btm">BTM Layout</option>
+                                <option value="malleshwaram">Malleshwaram</option>
+                                <option value="rajajinagar">Rajajinagar</option>
+                                <option value="vijayanagar">Vijayanagar</option>
+                                <option value="electronic-city">Electronic City</option>
+                                <option value="yeshwanthpur">Yeshwanthpur</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn-primary" onclick="nextStep(2)">Continue →</button>
+                    </div>
+
+                    <!-- Step 2: Destination -->
+                    <div class="form-step" id="formStep2">
+                        <div class="step-header">
+                            <span class="step-number">02</span>
+                            <h2>Where do you want to go?</h2>
+                            <p>Choose your destination</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="destination">🎯 Destination</label>
+                            <select id="destination" required>
+                                <option value="">Select destination</option>
+                                <option value="cubbon-park">Cubbon Park</option>
+                                <option value="lalbagh">Lalbagh Botanical Garden</option>
+                                <option value="bannerghatta">Bannerghatta National Park</option>
+                                <option value="nandi-hills">Nandi Hills</option>
+                                <option value="wonderla">Wonderla Amusement Park</option>
+                                <option value="isckon">ISKCON Temple</option>
+                                <option value="tipu-sultan">Tipu Sultan's Summer Palace</option>
+                                <option value="bangalore-palace">Bangalore Palace</option>
+                                <option value="vidhana-soudha">Vidhana Soudha</option>
+                                <option value="innovative-film-city">Innovative Film City</option>
+                                <option value="big-bull-temple">Big Bull Temple</option>
+                                <option value="ulsoor-lake">Ulsoor Lake</option>
+                                <option value="mg-road">MG Road & Commercial Street</option>
+                                <option value="national-gallery">National Gallery of Modern Art</option>
+                                <option value="visvesvaraya-museum">Visvesvaraya Industrial & Technological Museum</option>
+                            </select>
+                        </div>
+                        <div class="button-group">
+                            <button type="button" class="btn-secondary" onclick="prevStep(1)">← Back</button>
+                            <button type="button" class="btn-primary" onclick="nextStep(3)">Continue →</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Budget -->
+                    <div class="form-step" id="formStep3">
+                        <div class="step-header">
+                            <span class="step-number">03</span>
+                            <h2>What's your budget?</h2>
+                            <p>Enter your total budget for the trip</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="budget">💰 Budget (₹)</label>
+                            <input type="number" id="budget" min="1" step="100" placeholder="Enter your budget" required>
+                            <small>Enter your total budget for the trip</small>
+                        </div>
+                        <div class="budget-suggestions">
+                            <button type="button" class="budget-chip" onclick="setBudget(500)">₹500</button>
+                            <button type="button" class="budget-chip" onclick="setBudget(1000)">₹1,000</button>
+                            <button type="button" class="budget-chip" onclick="setBudget(2000)">₹2,000</button>
+                            <button type="button" class="budget-chip" onclick="setBudget(3000)">₹3,000</button>
+                            <button type="button" class="budget-chip" onclick="setBudget(5000)">₹5,000</button>
+                        </div>
+                        <div class="button-group">
+                            <button type="button" class="btn-secondary" onclick="prevStep(2)">← Back</button>
+                            <button type="button" class="btn-primary" onclick="nextStep(4)">Continue →</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: People -->
+                    <div class="form-step" id="formStep4">
+                        <div class="step-header">
+                            <span class="step-number">04</span>
+                            <h2>How many people?</h2>
+                            <p>Number of travelers</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="people">👥 Number of People</label>
+                            <input type="number" id="people" min="1" max="10" value="1" required>
+                        </div>
+                        <div class="button-group">
+                            <button type="button" class="btn-secondary" onclick="prevStep(3)">← Back</button>
+                            <button type="button" class="btn-primary" onclick="nextStep(5)">Continue →</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 5: Trip Duration & Preference -->
+                    <div class="form-step" id="formStep5">
+                        <div class="step-header">
+                            <span class="step-number">05</span>
+                            <h2>Trip Duration & Preference</h2>
+                            <p>How long do you want to spend?</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="tripHours">⏰ Trip Duration (Hours)</label>
+                            <select id="tripHours" required>
+                                <option value="">Select duration</option>
+                                <option value="2">2 Hours</option>
+                                <option value="3">3 Hours</option>
+                                <option value="4">4 Hours</option>
+                                <option value="5">5 Hours</option>
+                                <option value="6">6 Hours</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="preference">🌤️ Preference</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="preference" value="outdoor" checked>
+                                    <span>🌳 Outdoor</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="preference" value="indoor">
+                                    <span>🏛️ Indoor</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="preference" value="both">
+                                    <span>🌍 Both</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="emotionalState">💝 How are you feeling today?</label>
+                            <select id="emotionalState" required>
+                                <option value="">Select your mood</option>
+                                <option value="romantic">💕 Romantic Date - Perfect for couples</option>
+                                <option value="alone">🌙 Alone Time - Peaceful solo journey</option>
+                                <option value="sad">😢 Feeling Sad - Comforting & healing places</option>
+                                <option value="happy">😊 Happy & Energetic - Fun & exciting places</option>
+                                <option value="angry">😠 Need to Vent - Calming & peaceful spots</option>
+                                <option value="neutral">😐 Neutral - Just exploring</option>
+                            </select>
+                            <small>We'll suggest places that match your emotional state</small>
+                        </div>
+                        <div class="button-group">
+                            <button type="button" class="btn-secondary" onclick="prevStep(4)">← Back</button>
+                            <button type="button" class="btn-primary" onclick="nextStep(6)">Continue →</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 6: Health, Safety & Travel Preferences -->
+                    <div class="form-step" id="formStep6">
+                        <div class="step-header">
+                            <span class="step-number">06</span>
+                            <h2>Health, Safety & Travel Preferences</h2>
+                            <p>Help us personalize your trip for your comfort and safety</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="anxietyLevel">😌 Anxiety Level & Travel Experience</label>
+                            <select id="anxietyLevel">
+                                <option value="none">No anxiety / Experienced traveler</option>
+                                <option value="low">Low anxiety / Some travel experience</option>
+                                <option value="medium">Moderate anxiety / First solo trip</option>
+                                <option value="high">High anxiety / Very anxious traveler</option>
+                            </select>
+                            <small>We'll avoid multiple transfers and crowded routes if you're anxious</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>🚗 Motion Sickness</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="motionSickness" value="none" checked>
+                                    <span>No issues</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="motionSickness" value="mild">
+                                    <span>Mild</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="motionSickness" value="severe">
+                                    <span>Severe</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>🍽️ Food & Stomach Sensitivity</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="foodSensitivity" value="none" checked>
+                                    <span>No issues</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="foodSensitivity" value="light">
+                                    <span>Need light food</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="foodSensitivity" value="sensitive">
+                                    <span>Sensitive stomach</span>
+                                </label>
+                            </div>
+                            <small>We'll suggest light, easy-to-digest food for travel days</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>👩 Women's Safety Priority</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="safetyPriority" value="standard" checked>
+                                    <span>Standard</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="safetyPriority" value="high">
+                                    <span>High priority</span>
+                                </label>
+                            </div>
+                            <small>We'll prioritize safer routes and avoid late-night travel</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>🌿 Silent Travel Mode</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="noCrowds" value="noCrowds">
+                                    <span>🚫 Avoid crowded places</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="noParty" value="noParty">
+                                    <span>🚫 No party/entertainment areas</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="slowPace" value="slowPace">
+                                    <span>🐌 Prefer slow-paced travel</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="natureOnly" value="natureOnly">
+                                    <span>🌲 Only nature spots (lakes, hills, parks)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>⛰️ Trekking & Hiking</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="trekPreference" value="include" checked>
+                                    <span>✅ Include trekking places</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="trekPreference" value="exclude">
+                                    <span>❌ Exclude trekking places</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <p><strong>💡 Our Approach:</strong> We use rule-based logic inspired by behavioral and travel psychology, not black-box AI. Your preferences directly shape your itinerary.</p>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="btn-secondary" onclick="prevStep(5)">← Back</button>
+                            <button type="button" class="btn-primary" onclick="calculateTrip()">Plan My Trip ✈️</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="results-container" id="resultsContainer" style="display: none;">
+                <button class="btn-back" onclick="showForm()">← Back to Form</button>
+                <div id="resultsContent"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
